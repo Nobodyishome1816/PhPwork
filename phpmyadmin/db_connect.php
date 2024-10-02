@@ -4,10 +4,10 @@ $username = "membs";
 $password = "Password123"; //4 variables for the database
 $dbname = "membs";
 
-$conn = new mysqli($servername, $username, $password, $dbname); //standardised name "conn" for connection so use it
-
-if ($conn->connect_error) { //checks the connection to the database and tells what went wrong
-    die("Connection failed: " . $conn->connect_error); //kills the connection
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);//standardised name "conn" for connection so use it
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
 }
-echo "Connected successfully";
 ?>
