@@ -2,60 +2,91 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="styles.css">
-    <?php
-    session_start();
-    if(!$_SESSION["ssnlogin"]){
-        header("refresh:5;url=login.html");
-        echo"You are not currently logged in, redirecting to login page";
-    }else {
-        echo '<title> updater</title>';
-    }
-    ?>
 </head>
 <body>
+<div id="container">
+<h1>Welcome to the updater</h1>
+</div>
 <?php
-echo '<h1>Welcome to the Updator!</h1>';
+ session_start();
+if(!$_SESSION["ssnlogin"]) {
+    header("refresh:5;url=login.html");
+    echo "You are not currently logged in, redirecting to login page";
+}
+//}else {
+//    echo 'loading, you are logged in';
+//}
+include "db_connect.php";  // connects to the database
 
-// Retrieve user information using PDO
-$userId = $_SESSION['Userid'];
-$stmt = $conn->prepare("SELECT * FROM mem WHERE id = ?");
-$stmt->bindParam(1, $userId);
-$stmt->execute();
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
+$usnm = $_POST['Username'];  // pulls data from posted form
+//echo $usnm;
+$fname = $_POST['Fname']; // pulls data from posted form
+//echo $fname;
+$sname = $_POST['Sname']; // pulls data from posted form
+//echo $sname;
+$email = $_POST['Email']; // pulls data from posted form
+//echo $email;
+$userid = $_SESSION["Userid"]; //pulls data from session variable
+$susnm = $_SESSION["uname"]; //pulls the current username from session variables
+//echo $userid;
+//echo $susnm;
 
-// Handle form submission
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Update user information using PDO
-    $updatedUsername = $_POST['uname'];
-    $updatedFirstName = $_POST['fname'];
-    $updatedLastName = $_POST['sname'];
-    $updatedEmail = $_POST['email'];
+try {  // attempts this code
+    if ($susnm!=$usnm) { //if the username stored and typed dont match then do this
+    echo "usernames triggered";
+    $sql = "SELECT * FROM mem WHERE Username = ?";  // Selects usernames from database that match entered
+    $stmt = $conn->prepare($sql);  //perpares the statement
+    $stmt->bindParam(1, $usnm);  // secures this parameters, good coding method
+    $stmt->execute();  //executes the code
 
-    $updateStmt = $conn->prepare("UPDATE mem SET uname = ?, Fname = ?, Sname = ?, Email = ? WHERE id = ?");
-    $updateStmt->bindParam(1, $updatedUsername);
-    $updateStmt->bindParam(2, $updatedFirstName);
-    $updateStmt->bindParam(3, $updatedLastName);
-    $updateStmt->bindParam(4, $updatedEmail);
-    $updateStmt->bindParam(5, $userId);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);  //fetches the result
 
-    if ($updateStmt->execute()) {
-        // Update successful
-        header("Location: profile_updated.php");
-        exit();
-    } else {
-        // Update failed
-        echo "Error updating profile.";
+if ($result) {  //if there is a result
+    header("refresh:5; url=prof.php");  //error message and redirect
+    echo "Usernames Exists, try another name";
+    exit();  // this was needed as below code still executed... which is bad
     }
 }
+
+    $sql = "UPDATE mem SET Username=?, Fname=?, Sname=?, Email=? WHERE Userid = ?";  //sets up the statement
+    $stmt = $conn->prepare($sql);  //prepares it
+    $stmt->bindParam(1,$usnm);  //binding all the parameters
+    $stmt->bindParam(2,$fname);
+    $stmt->bindParam(3,$sname);
+    $stmt->bindParam(4,$email);
+    $stmt->bindParam(5,$userid);
+    $stmt->execute();  //execute the code
+    $_SESSION["uname"]=$usnm;  //update session variable
+
+
+// update the activity table to reflect updating details
+
+try {
+    $act = "upd";
+    $logtime = time();
+
+    $sql = "INSERT INTO activity (userid, activity, date) VALUES (?, ?, ?)";  //prepare the sql to be sent
+    $stmt = $conn->prepare($sql); //prepare to sql
+
+    $stmt->bindParam(1, $userid);  //bind parameters for security
+    $stmt->bindParam(2, $act);
+    $stmt->bindParam(3, $logtime);
+
+    $stmt->execute();  //run the query to insert
+    header("refresh:5; url=prof.php");  //redirect with confirmation message
+    echo "Details updated successfully";
+    } catch (Exception $e) {
+    echo $e->getMessage();
+    }
+
+
+
+
+    } catch(PDOException $e){   //catch error if one occurs
+    header("refresh:5; url=prof.php");
+    echo $e->getMessage();
+
+}
 ?>
-
-<form method="POST" action="">
-    <input type="text" name="uname" placeholder="Enter your new Username" value="<?php echo $user['uname'] ?>">
-    <input type="text" name="Fname" placeholder="Enter your new First name" value="<?php echo $user['fname'] ?>">
-    <input type="text" name="Sname" placeholder="Enter your new Surname" value="<?php echo $user['sname'] ?>">
-    <input type="text" name="uname" placeholder="Enter your new email" value="<?php echo $user['email'] ?>">
-    <input type="submit" value="Update">
-</form>
-
 </body>
 </html>

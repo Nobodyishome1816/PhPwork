@@ -12,7 +12,7 @@ try {
     $pswd = $_POST['password']; // gets password from login page
 
     // Prepare and execute the SQL statement using PDO
-    $sql = "SELECT password FROM mem WHERE Username = ?";
+    $sql = "SELECT * FROM mem WHERE Username = ?";
 
     $stmt = $conn->prepare($sql);
 
@@ -25,7 +25,8 @@ try {
     if ($result) {
         $_SESSION['ssnlogin'] = true;
         $_SESSION['uname'] = $usnm;
-        $hashedpassword = $result["password"];
+        $_SESSION['Userid'] = $result["Userid"];
+        $hashedpassword = $result["Password"];
         if (password_verify($pswd, $hashedpassword)) {
             header("location: prof.php");
             exit();

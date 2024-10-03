@@ -8,6 +8,7 @@
     $email = $_POST['email'];
     $pattern = "/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/";
     $passwordisvalid = true;
+    $signupdate = date ("Y-m-d");
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") { //used to start the if statement after everything
         if (empty($fname)) {
@@ -62,7 +63,7 @@
     else {
         echo 'password is incorrect';
     }try {
-    $sql = "INSERT INTO mem (Username, Password, Fname, Sname, Email) VALUES (?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO mem (Username, Password, Fname, Sname, Email, signup) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
 
 
@@ -71,6 +72,7 @@
     $stmt->bindParam(3, $fname);
     $stmt->bindParam(4, $sname);
     $stmt->bindParam(5, $email);
+    $stmt->bindParam(6, $signupdate);
 
     $stmt->execute();
     header("refresh:5; url=login.html");
