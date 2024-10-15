@@ -1,5 +1,78 @@
 body {
-    background-color: black;
     border: 1px white dotted;
     font-family: "monospace", sans-serif;
+    background-color: #1F4547;
+    color: white;
+}
+#container {
+    display: flex;
+    flex-flow: column wrap;
+    border: solid red 1px;
+}
+#container h1 {
+    justify-items: center;
+}
+#navbar {
+    background-color: #1F4547;
+    display: flex;
+    width: 99%;
+    border: solid black 1px;
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    list-style: none;
+}
+#navbar ul li {
+    list-style-type: none;
+    margin: 2px;
+    padding: 10px;
+    display: block;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "monospace", sans-serif;
+    text-decoration: none;
+    float: left;
+    overflow: hidden;
+}
+#navbar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 100%;
+}
+#navbar ul li a:hover {
+    text-decoration: underline;
+    color: white;
+}
+#logo {
+    max-width: 150px;
+    /*border-radius: 60%;*/
+    border: 1px solid black;
+}
+/*img {*/
+/*    float: left;*/
+/*    margin-right: 1%;*/
+/*    max-width: 500px;*/
+/*}*/
+#register {
+    border: black 1px solid;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: space-between;
+    width: 15%;
+    background-color: white;
+}
+#register input {
+    width: 97%;
+}
+#reg_photo{
+    max-width: 150px;
+    /*border-radius: 60%;*/
+    border: 1px solid black;
+    margin-right: auto;
+    margin-left: auto;
+}
+#reg_h1 {
+    margin-left: auto;
+    margin-right: auto;
 }
