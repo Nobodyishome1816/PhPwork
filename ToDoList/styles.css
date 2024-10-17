@@ -1,13 +1,15 @@
 body {
     border: 1px white dotted;
-    font-family: "monospace", sans-serif;
+    font-family: "ui-monospace", sans-serif;
     background-color: #1F4547;
     color: white;
+    margin: 1%;
 }
 #container {
     display: flex;
     flex-flow: column wrap;
     border: solid red 1px;
+    padding: 1%;
 }
 #container h1 {
     justify-items: center;
@@ -44,8 +46,8 @@ body {
     text-decoration: underline;
     color: white;
 }
-#logo {
-    max-width: 150px;
+#navbar_logo {
+    max-width: 10%;
     /*border-radius: 60%;*/
     border: 1px solid black;
 }

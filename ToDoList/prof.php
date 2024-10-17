@@ -11,6 +11,7 @@ if(!$_SESSION["ssnlogin"]){  //if no login has been completed
 
     echo "<html lang='en'>";
     echo "<head>";
+    echo "<link rel='stylesheet' href='styles.css'>";
     $usnm = $_SESSION['uname'];  //copies session name
     $userid = $_SESSION['Userid'];  //copies session userid
     echo "<title>". $usnm. "'s profile page</title>";  //echoes title to the page
@@ -18,12 +19,19 @@ if(!$_SESSION["ssnlogin"]){  //if no login has been completed
 
 echo "</head>";
 echo "<body>";
+echo "<div id='container'>";
+echo "<div id='navbar'>";
+echo "<img id='navbar_logo' src='Watkins_copy.png' alt='Watkins ToDo List'>";
+echo "<ul>";
+echo "<li><a href='tasks.html'>Tasks</a></li>";
+//echo "<li><a href='login.html'>Log In</a></li>";
+echo "</ul>";
 
+echo "</div>";
 
+echo "<h1>Welcome ".$usnm. " To your profile page</h1>";  //welcome comment to the page
 
-echo "Welcome ".$usnm. " To your profile page";  //welcome comment to the page
-
-echo "<br><br>";
+echo "<br>";
 echo "Here is your data";
 
 echo "<br><br>";
@@ -53,7 +61,7 @@ foreach($result as $key=>$value){  //runs loop to go through each of the returne
         echo $key.": ". $value."<br>";  //echo out as text, not editable
     } elseif($key=="signup"){ //detects the sign up date
         echo $key.": ". $value."<br>";
-    } elseif ($key!="Password"){  //if its the password data, don't output
+    } elseif ($key!="password"){  //if its the password data, don't output
         echo "<label for='".$key."'>".$key."</label>";  //produce label and form element using data in assoc array
         echo "<input type='text' name='".$key."' value='".$value."'><br>";
     }
@@ -111,7 +119,7 @@ echo '</table>';
 //foreach($act as $key=>$value){
 //    echo $key.": ".$value."<br>";
 //}
-
+echo "</div>";
 echo "</body>";
 echo"</html>";
 

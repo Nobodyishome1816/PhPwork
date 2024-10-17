@@ -25,14 +25,15 @@ try {
     if ($result) {
         $_SESSION['ssnlogin'] = true;
         $_SESSION['uname'] = $usnm;
-        $_SESSION['Userid'] = $result["Userid"];
-        $hashedpassword = $result["Password"];
+        $_SESSION['Userid'] = $result["userid"];
+        $hashedpassword = $result["password"];
         if (password_verify($pswd, $hashedpassword)) {
             header("location: prof.php");
             exit();
         } else {
             session_destroy();
             echo "invalid password";
+            header("refresh:5; index.html");
         }
         // tries the password and username against the database
     } else {
