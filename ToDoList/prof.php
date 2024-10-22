@@ -23,7 +23,7 @@ echo "<div id='container'>";
 echo "<div id='navbar'>";
 echo "<img id='navbar_logo' src='Watkins_copy.png' alt='Watkins ToDo List'>";
 echo "<ul>";
-echo "<li><a href='tasks.html'>Tasks</a></li>";
+echo "<li><a href='lists.php'>Tasks</a></li>";
 //echo "<li><a href='login.html'>Log In</a></li>";
 echo "</ul>";
 
@@ -57,7 +57,7 @@ echo "<form method='post' action='updater.php'>";  //echos out start of the form
 
 foreach($result as $key=>$value){  //runs loop to go through each of the returned items
 
-    if($key=="Userid"){  // if its the userid data
+    if($key=="userid"){  // if its the userid data
         echo $key.": ". $value."<br>";  //echo out as text, not editable
     } elseif($key=="signup"){ //detects the sign up date
         echo $key.": ". $value."<br>";
