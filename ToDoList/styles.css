@@ -78,3 +78,14 @@ body {
     margin-left: auto;
     margin-right: auto;
 }
+#task_setting {
+    border: white solid 1px;
+    margin-right: auto;
+    margin-left: auto;
+    justify-content: space-between;
+    width: 80%;
+    background-color: white;
+}
+#task_setting input {
+    width: 99%;
+}
