@@ -23,9 +23,6 @@ try {
     $sql = "INSERT INTO List (userid, listname, date) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($sql);
 
-    echo $userid;
-    echo $list;
-    echo $time;
     // binds the parameter for extra security into the column
     $stmt->bindParam(1, $userid);
     $stmt->bindParam(2, $list);
